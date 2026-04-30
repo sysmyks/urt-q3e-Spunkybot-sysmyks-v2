@@ -1589,6 +1589,30 @@ class LogParser(object):
             way = str(way_time[0])  # Convert directly to string to avoid errors
             time_ms = int(way_time[1])
 
+            # Guard against server 32-bit timer overflow: the Q3/UrT engine stores its
+            # internal clock as a signed 32-bit integer (ms since server start).  After
+            # ~24.8 days the counter wraps around and the elapsed time sent in
+            # ClientJumpRunStopped becomes a large negative number.  We apply the
+            # unsigned-int32 correction so the real elapsed ms is recovered, then
+            # reject the result if it is still clearly invalid (> 24 h).
+            if time_ms < 0:
+                time_ms = time_ms & 0xFFFFFFFF  # cast to uint32
+                logger.warning(
+                    "handle_jump_run_stopped: negative time_ms detected (server timer overflow), "
+                    "corrected to %d ms for player %d", time_ms, player_id)
+
+            # Sanity check: a jump run longer than 24 hours is certainly corrupted
+            MAX_RUN_MS = 86400000  # 24 h in ms
+            if time_ms <= 0 or time_ms > MAX_RUN_MS:
+                logger.warning(
+                    "handle_jump_run_stopped: implausible time_ms=%d for player %d, discarding run",
+                    time_ms, player_id)
+                if player_id in self.jump_times:
+                    del self.jump_times[player_id]
+                self.game.send_rcon('stopserverdemo {}'.format(player_id))
+                self.cleanup_old_demos()
+                return
+
             # Check if player had started a run
             if player_id not in self.jump_times:
                 logger.warning("Received finished run without a started run for player %d", player_id)
@@ -1597,6 +1621,17 @@ class LogParser(object):
             # Get player information
             player_name = self.get_player_name(player_id)
             current_map = self.get_current_map()
+
+            # Guard: player may have disconnected between run start and stop
+            if player_id not in self.game.players:
+                logger.warning(
+                    "handle_jump_run_stopped: player %d no longer connected, discarding run", player_id)
+                if player_id in self.jump_times:
+                    del self.jump_times[player_id]
+                self.game.send_rcon('stopserverdemo {}'.format(player_id))
+                self.cleanup_old_demos()
+                return
+
             player_num = self.game.players[player_id].get_player_num()
             
             logger.info("Recording run: Player=%s, Map=%s, Way=%s, Time=%d ms", 
