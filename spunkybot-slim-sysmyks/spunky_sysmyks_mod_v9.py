@@ -832,7 +832,7 @@ class LogParser(object):
     def rename_demo(self, player_name, map_name, way):
         """Rename and move the most recent demo file to the records folder after a new record."""
         demo_path = self.serverdemos_file
-        records_path = os.path.join(demo_path, 'records')
+        records_path = os.path.join(os.path.dirname(demo_path), 'records')
 
         if not os.path.exists(records_path):
             try:
