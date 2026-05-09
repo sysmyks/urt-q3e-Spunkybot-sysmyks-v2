@@ -14,13 +14,12 @@ This server is based on a modified version of [`urbanterror-slim`](urbanterror-s
 - **Multi-architecture**: Support for x86_64, ARM64 (Raspberry Pi 64bit)
 - **DoS protection**: Enhanced security against denial of service attacks
 - **Extended limits**: Support for up to 20,000 maps in a single directory
-- **Server-side demo recording**: add server demo recording 
 
 ## 🎮 Custom Client Commands
 
 | Command | Description |
 |----------|-------------|
-| `/noclip` | Allows players to pass through walls |
+| `/noclip` | Allows players to pass through walls (only in Jump mode and outside Ready mode) |
 | `/save` | Improved version to save player position with race mode handling |
 | `/load` | Improved version to load position with protection during races |
 | `/help` | Displays the list of commands available to players |
@@ -59,9 +58,3 @@ This version of SpunkyBot has been specially adapted to work with the modified Q
 - Python 3
 - Linux/Windows/Raspberry Pi 64bit 
 
-## Dependencies 
-
-| Package | Version | Purpose |
-|---|---|---|
-| `deep-translator` | 1.11.4 | Google Translate, no API key required |
-| `unidecode` | 1.4.0 | Kept from previous setup |

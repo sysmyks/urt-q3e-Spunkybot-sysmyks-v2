@@ -76,8 +76,8 @@ COMMANDS = {'help': {'desc': 'display all available commands', 'syntax': '^7Usag
             # user commands, level 1
             'regtest': {'desc': 'display current user status', 'syntax': '^7Usage: ^9!regtest', 'level': 1},
             'spec': {'desc': 'move yourself to spectator', 'syntax': '^7Usage: ^9!spec or !sp', 'level': 20, 'short': 'sp'},
-            'play': {'desc': 'move yourself to spectator', 'syntax': '^7Usage: ^9!play or !pl', 'level': 20, 'short': 'pl'},
-            'goto': {'desc': 'Goto to a specific jump', 'syntax': '^7Usage: ^9!goto', 'level': 20},
+            'play': {'desc': 'move yourself to active team', 'syntax': '^7Usage: ^9!play or !pl', 'level': 20, 'short': 'pl'},
+            'goto': {'desc': 'go to a specific jump location', 'syntax': '^7Usage: ^9!goto ^7<jump_name>', 'level': 20},
             'glist': {'desc': 'Displays maps saved locations', 'syntax': '^7Usage: ^9!glist', 'level': 20},
             'time': {'desc': 'display the current server time', 'syntax': '^7Usage: ^9!time', 'level': 20},
             'ready': {'desc': 'start timer mod', 'syntax': '^7Usage: ^9!ready or !r', 'level': 20, 'short': 'r'},
@@ -93,17 +93,18 @@ COMMANDS = {'help': {'desc': 'display all available commands', 'syntax': '^7Usag
             'drop': {'desc': 'drop your stuff', 'syntax': '^7Usage: ^9!drop or !dr',  'level': 20, 'short': 'dr'},
             'mapinfo': {'desc': 'map info', 'syntax': '^7Usage: ^9!mapinfo',  'level': 20},
             'top': {'desc': 'display your records', 'syntax': '^7Usage: ^9!top',  'level': 20},
-            'noclip': {'desc': 'noclip', 'syntax': '^7Usage: ^9!noclip or !n',  'level': 20, 'short': 'n'},
+            'noclip': {'desc': 'toggle noclip mode', 'syntax': '^7Usage: ^9!noclip or !n',  'level': 20, 'short': 'n'},
             'msgadmin': {'desc': 'send a message to the admin', 'syntax': '^7Usage: ^9!msgadmin <text>', 'level': 20},
-            'stamina': {'desc': 'stamina', 'syntax': '^7Usage: ^9!stamina or !stam',  'level': 20, 'short': 'stam'},
+            'stamina': {'desc': 'display stamina settings', 'syntax': '^7Usage: ^9!stamina or !stam',  'level': 20, 'short': 'stam'},
+            'webtoken': {'desc': 'link your game account to the website', 'syntax': '^7Usage: ^9!webtoken ^7<token> or !wt <token>', 'level': 0, 'short': 'wt'},
             
             
-            # moderator commands, level 20
+            # admin commands, level 40
             
-            'sendmessage': {'desc': 'sendmessage specifique player', 'syntax': '^7Usage: ^9!sendmessage', 'level': 40},
-            'delmessage': {'desc': 'delmessage specifique player', 'syntax': '^7Usage: ^9!delmessage', 'level': 40},
-            'g_stamina': {'desc': 'g_stamina 1 or 2', 'syntax': '^7Usage: ^9!g_stamina', 'level': 40},
-            'g_walljump': {'desc': 'g_walljump', 'syntax': '^7Usage: ^9!g_walljump', 'level': 40},
+            'sendmessage': {'desc': 'send a message to a specific player', 'syntax': '^7Usage: ^9!sendmessage ^7<name> <message>', 'level': 40},
+            'delmessage': {'desc': 'delete pending messages for a player', 'syntax': '^7Usage: ^9!delmessage ^7<name>', 'level': 40},
+            'g_stamina': {'desc': 'set stamina mode', 'syntax': '^7Usage: ^9!g_stamina ^7<1/2>', 'level': 40},
+            'g_walljump': {'desc': 'enable or disable wall jump', 'syntax': '^7Usage: ^9!g_walljump ^7<0/1>', 'level': 40},
             'admintest': {'desc': 'display current admin status', 'syntax': '^7Usage: ^9!admintest', 'level': 40},
             'country': {'desc': 'get the country of a player', 'syntax': '^7Usage: ^9!country ^7<name>', 'level': 40},
             'lastmaps': {'desc': 'list the last played maps', 'syntax': '^7Usage: ^9!lastmaps', 'level': 40},
@@ -112,7 +113,6 @@ COMMANDS = {'help': {'desc': 'display all available commands', 'syntax': '^7Usag
             'list': {'desc': 'list all connected players', 'syntax': '^7Usage: ^9!list', 'level': 40},
             'locate': {'desc': 'display geolocation info of a player', 'syntax': '^7Usage: ^9!locate ^7<name>', 'level': 40, 'short': 'lc'},
             'mute': {'desc': 'mute or un-mute a player', 'syntax': '^7Usage: ^9!mute ^7<name> [<duration>]', 'level': 40},
-            'nextmap': {'desc': 'display the next map in rotation', 'syntax': '^7Usage: ^9!nextmap', 'level': 40},
             'poke': {'desc': 'notify a player that he needs to move', 'syntax': '^7Usage: ^9!poke ^7<name>', 'level': 40},
             'seen': {'desc': 'display when a player was last seen', 'syntax': '^7Usage: ^9!seen ^7<name>', 'level': 40},
             'warn': {'desc': 'warn player', 'syntax': '^7Usage: ^9!warn ^7<name> [<reason>]', 'level': 40, 'short': 'w'},
@@ -125,7 +125,7 @@ COMMANDS = {'help': {'desc': 'display all available commands', 'syntax': '^7Usag
             'setmapinfo': {'desc': 'set info for a map', 'syntax': '^7Usage: ^9!setmapinfo <mapname> <difficulty> <num_jumps> <author(s)>', 'level': 40},
             'delmapinfo': {'desc': 'del info for a map', 'syntax': '^7Usage: ^9!delmapinfo <mapname>', 'level': 40},
             'delmap': {'desc': 'Delete a map from mapcycle', 'syntax': '^7Usage: ^9!delmap <mapname>', 'level': 40},
-            'download': {'desc': 'download', 'syntax': '^7Usage: ^9!download <map>', 'level': 40},
+            'download': {'desc': 'download a map to the server', 'syntax': '^7Usage: ^9!download ^7<mapname>', 'level': 40},
             
 
             # admin commands, level 40
@@ -422,8 +422,7 @@ class LogParser(object):
         """
         Thread process for starting method rotate_messages
         """
-        processor = Thread(target=self.rotating_messages)
-        processor.setDaemon(True)
+        processor = Thread(target=self.rotating_messages, daemon=True)
         processor.start()
 
     def rotating_messages(self):
@@ -432,7 +431,7 @@ class LogParser(object):
         """
         # initial wait
         time.sleep(30)
-        while 1:
+        while True:
             try:
                 with open(self.rules_file, 'r') as filehandle:
                     rotation_msg = filehandle.readlines()
@@ -1123,7 +1122,9 @@ class LogParser(object):
                     for msg in messages:
                         time_obj = datetime.strptime(msg['timestamp'], "%Y-%m-%d %H:%M:%S")
                         time_format = time_obj.strftime("%d-%m %H:%M")
-                        self.game.rcon_tell(player.get_player_num(), "^7[^9{}^7] from ^9{}: ^7{}".format(time_format, msg['sender'], msg['message']))
+                        safe_sender = _sanitize_rcon_name(msg['sender'])
+                        safe_message = _sanitize_rcon_name(msg['message'])
+                        self.game.rcon_tell(player.get_player_num(), "^7[^9{}^7] from ^9{}: ^7{}".format(time_format, safe_sender, safe_message))
                     
                     # Delete messages now that they've been delivered
                     del pending_messages[recipient_key]
@@ -1550,7 +1551,7 @@ class LogParser(object):
             return
         player_num = self.game.players[player_id].get_player_num()
         self.game.send_rcon('startserverdemo {}'.format(player_num))
-        logger.info('Jump run started for player {0} on way {1}. Demo started.'.format(player_id, way))
+        logger.debug('Jump run started for player {0} on way {1}. Demo started.'.format(player_id, way))
 
 
     def handle_jump_run_canceled(self, line):
@@ -1564,7 +1565,7 @@ class LogParser(object):
             # Stop and discard the demo
             self.game.send_rcon('stopserverdemo {}'.format(player_id))
             self.cleanup_old_demos()
-            logger.info('Jump run canceled for player {0} on way {1}.'.format(player_id, way))
+            logger.debug('Jump run canceled for player {0} on way {1}.'.format(player_id, way))
 
 
 
@@ -1634,7 +1635,7 @@ class LogParser(object):
 
             player_num = self.game.players[player_id].get_player_num()
             
-            logger.info("Recording run: Player=%s, Map=%s, Way=%s, Time=%d ms", 
+            logger.debug("Recording run: Player=%s, Map=%s, Way=%s, Time=%d ms", 
                         player_name, current_map, way, time_ms)
 
             # Check if structure already exists for this map
@@ -1677,7 +1678,7 @@ class LogParser(object):
                 # No record: stop demo and delete it
                 self.game.send_rcon('stopserverdemo {}'.format(player_id))
                 self.cleanup_old_demos()
-                logger.info('No new record. Demo deleted for player %s on way %s.', player_name, way)
+                logger.debug('No new record. Demo deleted for player %s on way %s.', player_name, way)
             
             # Cleanup
             del self.jump_times[player_id]
@@ -2159,7 +2160,7 @@ class LogParser(object):
                     elif self.game.players[sar['player_num']].get_admin_role() >= 90:
                         self.game.rcon_tell(sar['player_num'], "^7Super Admin commands: ^7%s" % ', ^7'.join(self.clean_cmd_list(self.superadmin_cmds)))
 
-## player commands 20
+## player commands (min level: jumper)
             # register - register yourself as a basic user
             elif sar['command'] == '!register':
                 if not self.game.players[sar['player_num']].get_registered_user():
@@ -2185,6 +2186,70 @@ class LogParser(object):
                 else:
                     self.game.rcon_tell(sar['player_num'], "^7You are not registered! ^7Please ^9!register ^7to use this command.")
             
+            # webtoken / wt - link game account to website (level 0 : all players)
+            elif sar['command'] in ('!webtoken', '!wt'):
+                arg = line.split(sar['command'])
+                token = arg[1].strip() if len(arg) > 1 and arg[1].strip() else ''
+                if not token:
+                    self.game.rcon_tell(sar['player_num'], "^7Usage: ^9!wt ^7<token>  - Get your token on the website")
+                else:
+                    try:
+                        web_tokens_file = os.path.join(self.base_path, 'mod', 'web_tokens.json')
+                        web_linked_file = os.path.join(self.base_path, 'mod', 'web_linked.json')
+                        logger.info("[webtoken] player=%d token='%s' file=%s", sar['player_num'], token, web_tokens_file)
+                        try:
+                            with open(web_tokens_file, 'r') as f:
+                                tokens = json.load(f)
+                            logger.info("[webtoken] tokens loaded keys=%s", list(tokens.keys()))
+                        except Exception as e:
+                            logger.error("[webtoken] Cannot read web_tokens.json: %s", e)
+                            self.game.rcon_tell(sar['player_num'], "^8Error: cannot read token file. Contact admin.")
+                            tokens = None
+                        if tokens is not None:
+                            now = time.time()
+                            if token not in tokens:
+                                logger.info("[webtoken] token '%s' not found in keys=%s", token, list(tokens.keys()))
+                                self.game.rcon_tell(sar['player_num'], "^8Invalid or expired token. ^7Please get a new one on the website.")
+                            elif now > tokens[token].get('expires', 0):
+                                logger.info("[webtoken] token '%s' expired", token)
+                                del tokens[token]
+                                try:
+                                    with open(web_tokens_file, 'w') as f:
+                                        json.dump(tokens, f)
+                                except Exception as e:
+                                    logger.error("[webtoken] Cannot write web_tokens.json: %s", e)
+                                self.game.rcon_tell(sar['player_num'], "^8Token expired. ^7Please get a new one on the website.")
+                            else:
+                                visitor_ip = tokens[token].get('ip', '')
+                                player = self.game.players[sar['player_num']]
+                                guid = player.get_guid()
+                                name = player.get_name()
+                                logger.info("[webtoken] linking ip=%s guid=%s name=%s", visitor_ip, guid, name)
+                                try:
+                                    with open(web_linked_file, 'r') as f:
+                                        linked = json.load(f)
+                                except Exception:
+                                    linked = {}
+                                linked[visitor_ip] = {
+                                    'guid': guid,
+                                    'name': name,
+                                    'linked_at': int(now)
+                                }
+                                try:
+                                    with open(web_linked_file, 'w') as f:
+                                        json.dump(linked, f, indent=2)
+                                    del tokens[token]
+                                    with open(web_tokens_file, 'w') as f:
+                                        json.dump(tokens, f)
+                                    logger.info("[webtoken] linked ip=%s guid=%s name=%s", visitor_ip, guid, name)
+                                    self.game.rcon_tell(sar['player_num'], "^9[Website] ^7Account linked! ^9%s ^7can now vote from the website." % name)
+                                except Exception as e:
+                                    logger.error("[webtoken] Cannot write linked/tokens file: %s", e)
+                                    self.game.rcon_tell(sar['player_num'], "^8Error: cannot save link. Contact admin.")
+                    except Exception as e:
+                        logger.error("[webtoken] Unexpected error: %s", e, exc_info=True)
+                        self.game.rcon_tell(sar['player_num'], "^8Internal error in !wt. Contact admin.")
+
             # mapinfo
             # update mapinfo function
             elif sar['command'] == '!mapinfo':
@@ -2232,14 +2297,14 @@ class LogParser(object):
                 else:
                     self.game.rcon_tell(sar['player_num'], "^7You are not registered! ^7Please ^9!register ^7to use this command.")
 
-            # spec - move yourself back to game
+            # play - move yourself back to active team
             elif sar['command'] in ('!play', '!pl'): 
                 if self.game.players[sar['player_num']].get_admin_role() >= COMMANDS['play']['level']:
                     self.game.rcon_forceteam(sar['player_num'], 'free')
                 else: 
                     self.game.rcon_tell(sar['player_num'], "^7You are not registered! ^7Please ^9!register ^7to use this command.")
 
-            #ready - play timer
+            # ready - toggle player ready state
             elif sar['command'] in ('!ready', '!r'):    
                 if self.game.players[sar['player_num']].get_admin_role() >= COMMANDS['ready']['level']:
                     player = self.game.players[sar['player_num']]
@@ -2249,7 +2314,7 @@ class LogParser(object):
                 else:
                     self.game.rcon_tell(sar['player_num'], "^7You are not registered! ^7Please ^9!register ^7to use this command.")
 
-            #stamina
+            # stamina - display or toggle infinite stamina for current player
             elif sar['command'] in ('!stamina', '!stam'):
                 if self.game.players[sar['player_num']].get_admin_role() >= COMMANDS['stamina']['level']:
                     player = self.game.players[sar['player_num']]
@@ -2267,21 +2332,21 @@ class LogParser(object):
                 else:
                     self.game.rcon_tell(sar['player_num'], "^7You are not registered! ^7Please ^9!register ^7to use this command.")            
 
-            #noclip
+            # noclip - toggle noclip mode for current player
             elif sar['command'] in ('!noclip', '!n'): 
                 if self.game.players[sar['player_num']].get_admin_role() >= COMMANDS['noclip']['level']:
                     self.game.send_rcon("spoof %s noclip" % _sanitize_rcon_name(self.game.players[sar['player_num']].get_name()))
                 else:
                     self.game.rcon_tell(sar['player_num'], "^7You are not registered! ^7Please ^9!register ^7to use this command.")
 
-            #regainstamina
+            # regainstamina - refill stamina for current player
             elif sar['command'] in ('!regainstamina', '!rgs'): 
                 if self.game.players[sar['player_num']].get_admin_role() >= COMMANDS['regainstamina']['level']:
                     self.game.send_rcon("spoof %s regainstamina" % _sanitize_rcon_name(self.game.players[sar['player_num']].get_name()))
                 else:    
                     self.game.rcon_tell(sar['player_num'], "^7You are not registered! ^7Please ^9!register ^7to use this command.")
 
-            # allowgot
+            # allowgoto - toggle allowgoto permission for current player
             elif sar['command'] in ('!allowgoto', '!alg'):
                 if self.game.players[sar['player_num']].get_admin_role() >= COMMANDS['allowgoto']['level']:
                     self.game.send_rcon("spoof %s allowgoto" % _sanitize_rcon_name(self.game.players[sar['player_num']].get_name()))            
@@ -2302,20 +2367,20 @@ class LogParser(object):
                             
                             # Fill the structure with records from the JSON file
                             for player, times in records.items():
-                                for way, time in times.items():
+                                for way, t_ms in times.items():
                                     if way not in ways:
                                         ways[way] = []
-                                    ways[way].append((player, time))
+                                    ways[way].append((player, t_ms))
                             
                             # Build message with the top three times for each way
                             for way, results in sorted(ways.items()):
                                 # Sort times in ascending order
                                 top3 = sorted(results, key=lambda x: x[1])[:3]
                                 msg = "^8Way {}:^7 ".format(way)
-                                for player, time in top3:
-                                    minutes = time // 60000
-                                    seconds = (time % 60000) // 1000
-                                    milliseconds = time % 1000
+                                for player, t_ms in top3:
+                                    minutes = t_ms // 60000
+                                    seconds = (t_ms % 60000) // 1000
+                                    milliseconds = t_ms % 1000
                                     msg += "^9{}:^7 {}m {}s {}ms, ".format(player, minutes, seconds, milliseconds)
                                 msg = msg.rstrip(', ')
                                 # Send message for each way
@@ -2433,10 +2498,10 @@ class LogParser(object):
                         
                         if records and player_name in records:
                             player_records = records[player_name]
-                            for way, time in sorted(player_records.items()):
-                                minutes = time // 60000
-                                seconds = (time % 60000) // 1000
-                                milliseconds = time % 1000
+                            for way, t_ms in sorted(player_records.items()):
+                                minutes = t_ms // 60000
+                                seconds = (t_ms % 60000) // 1000
+                                milliseconds = t_ms % 1000
                                 msg = "^8Way {}:^7 ^9{}:^7 {}m {}s {}ms".format(way, player_name, minutes, seconds, milliseconds)
                                 self.tell_say_message(sar, msg)
                         else:
@@ -2555,8 +2620,9 @@ class LogParser(object):
                 else:
                     self.game.rcon_tell(sar['player_num'], "^7You are not authorized to use this command")
 
-## mod level 40
-            
+## admin commands (min level: admin)
+
+            # sendmessage - send a pending message to a specific player
             elif sar['command'] == '!sendmessage' and self.game.players[sar['player_num']].get_admin_role() >= COMMANDS['sendmessage']['level']:
                 parts = line.split(sar['command'])[1].strip().split(' ', 1)
                 if len(parts) == 2:
@@ -2566,6 +2632,7 @@ class LogParser(object):
                 else:
                     self.game.rcon_tell(sar['player_num'], COMMANDS['sendmessage']['syntax'])
 
+            # delmessage - delete pending messages for a specific player
             elif sar['command'] == '!delmessage' and self.game.players[sar['player_num']].get_admin_role() >= COMMANDS['delmessage']['level']:
                 if line.split(sar['command'])[1]:
                     recipient = line.split(sar['command'])[1].strip()
@@ -2690,6 +2757,7 @@ class LogParser(object):
                     self.game.rcon_tell(sar['player_num'], "^7Usage: !delmap <mapname>")
             
             # !setgoto command
+            # setgoto - save current player position as a named jump location
             elif sar['command'] == '!setgoto' and self.game.players[sar['player_num']].get_admin_role() >= COMMANDS['setgoto']['level']:
                 jump_name = line.split(sar['command'])[1].strip()
                 if not jump_name:
@@ -2730,6 +2798,7 @@ class LogParser(object):
                     self.tell_say_message(sar, "^8Error processing !setgoto: {}".format(e))
 
         
+            # setmapinfo - save map metadata (difficulty, jump count, author)
             elif sar['command'] == '!setmapinfo' and self.game.players[sar['player_num']].get_admin_role() >= COMMANDS['setmapinfo']['level']:
                 args = line.split(sar['command'])[1].strip().split(' ', 3)  # Split into 4 parts max
                 if len(args) >= 4:
@@ -2759,6 +2828,7 @@ class LogParser(object):
         
                 self.tell_say_message(sar, msg)
 
+            # delmapinfo - delete map metadata for a given map
             elif sar['command'] == '!delmapinfo' and self.game.players[sar['player_num']].get_admin_role() >= COMMANDS['delmapinfo']['level']:
                 if line.split(sar['command'])[1]:
                     map_name = line.split(sar['command'])[1].strip()
@@ -2776,6 +2846,7 @@ class LogParser(object):
                 
                 self.tell_say_message(sar, msg)
             
+            # delgoto - delete a named jump location
             elif sar['command'] == '!delgoto' and self.game.players[sar['player_num']].get_admin_role() >= COMMANDS['delgoto']['level']:
                 if line.split(sar['command'])[1]:
                     jump_name = line.split(sar['command'])[1].strip()
@@ -2783,7 +2854,7 @@ class LogParser(object):
                 else:
                     self.game.rcon_tell(sar['player_num'], COMMANDS['delgoto']['syntax'])
             
-            #!g_stamina
+            # g_stamina - toggle stamina mode between limited (1) and infinite (2)
             elif sar['command'] == '!g_stamina' and self.game.players[sar['player_num']].get_admin_role() >= COMMANDS['g_stamina']['level']:
                 try:
                     stam = int(self.game.get_cvar('g_stamina') or 0)
@@ -2795,7 +2866,7 @@ class LogParser(object):
                 else:
                     self.game.send_rcon("g_stamina 1")
                     self.game.rcon_say("^7Full stamina ^8Off^7 !")
-            #!walljump
+            # g_walljump - enable or disable extended wall jumps
             elif sar['command'] == '!g_walljump' and self.game.players[sar['player_num']].get_admin_role() >= COMMANDS['g_walljump']['level']:
                 try:
                     wj = int(self.game.get_cvar('g_walljumps') or 0)
@@ -4117,8 +4188,7 @@ class LogParser(object):
         logger.debug("Bomb exploded!")
         if self.kill_survived_opponents and self.urt_modversion > 41:
             # start Thread to kill all survived blue players
-            processor = Thread(target=self.kill_blue_team_bomb_exploded)
-            processor.setDaemon(True)
+            processor = Thread(target=self.kill_blue_team_bomb_exploded, daemon=True)
             processor.start()
         self.handle_teams_ts_mode('Red')
 
@@ -5009,23 +5079,22 @@ class Game(object):
         Thread process for starting method rcon_process
         """
         # start Thread
-        processor = Thread(target=self.rcon_process)
-        processor.setDaemon(True)
+        processor = Thread(target=self.rcon_process, daemon=True)
         processor.start()
 
     def rcon_process(self):
         """
         Thread process
         """
-        while 1:
+        while True:
             try:
                 if not self.queue.empty() and self.live:
                     with self.rcon_lock:
-                        command = self.queue.get_nowait()  # Non-bloquant
+                        command = self.queue.get_nowait()  # Non-blocking
                         if command and command != 'status':
                             try:
                                 self.quake.rcon(command)
-                                time.sleep(RCON_DELAY)  # Pause entre les commandes
+                                time.sleep(RCON_DELAY)  # Pause between commands
                             except Exception as err:
                                 logger.error("RCON error: %s", err)
                         elif command == 'status':
@@ -5034,7 +5103,7 @@ class Game(object):
                             except Exception:
                                 pass
                 else:
-                    time.sleep(RCON_DELAY)  # Éviter d'épuiser le CPU
+                    time.sleep(RCON_DELAY)  # Avoid CPU busy-wait
             except Exception as err:
                 logger.error("Thread error: %s", err)
                 time.sleep(RCON_DELAY)
@@ -5092,11 +5161,8 @@ class Game(object):
         get the full path of mapcycle.txt file
         """
         maplist = []
-        #self.get_cvar('')
         # get path of fs_homepath and fs_basepath
         fs_homepath = self.get_cvar('fs_homepath')
-        if not fs_homepath:
-            fs_homepath = self.get_cvar('fs_homepath')
         logger.debug("fs_homepath           : %s", fs_homepath)
         fs_basepath = self.get_cvar('fs_basepath')
         logger.debug("fs_basepath           : %s", fs_basepath)
@@ -5115,7 +5181,7 @@ class Game(object):
             with open(mapcycle_path, 'r') as file_handle:
                 lines = [line for line in file_handle if line != '\n']
             try:
-                while 1:
+                while True:
                     tmp = lines.pop(0).strip()
                     if tmp[0] == '{':
                         while tmp[0] != '}':
@@ -5275,8 +5341,6 @@ class Game(object):
                     self.next_mapname = (random.choice(random_map))
             else:
                 self.next_mapname = (random.choice(random_map))
-        else:
-            self.next_mapname = self.mapname
         
         logger.debug("Current map: %s / Next map: %s", self.mapname, self.next_mapname)
 
@@ -5371,12 +5435,12 @@ if __name__ == "__main__":
     GEOIP = pygeoip.Database(os.path.join(HOME, 'lib', 'GeoIP.dat'))
 
     # connect to database
-    # check_same_thread=False requis car plusieurs threads utilisent la connexion
+    # check_same_thread=False required as multiple threads use the connection
     conn = sqlite3.connect(os.path.join(HOME, 'data.sqlite'), check_same_thread=False)
-    conn.execute("PRAGMA journal_mode=WAL")  # ecriture non-bloquante (Linux + Windows)
+    conn.execute("PRAGMA journal_mode=WAL")  # non-blocking writes (Linux + Windows)
     curs = conn.cursor()
-    db_lock = __import__('threading').RLock()  # verrou pour les acces DB multi-thread
-    _pending_messages_lock = __import__('threading').RLock()  # verrou pour pending_messages.json
+    db_lock = __import__('threading').RLock()  # lock for multi-threaded DB access
+    _pending_messages_lock = __import__('threading').RLock()  # lock for pending_messages.json access
     CONFIG = ConfigParser.ConfigParser(inline_comment_prefixes=(';', '#'))
     CONF_PATH = os.path.join(HOME, 'conf', 'settings.conf')
     CONFIG.read(CONF_PATH)
